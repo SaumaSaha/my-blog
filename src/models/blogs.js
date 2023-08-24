@@ -11,6 +11,10 @@ class Blogs {
     this.#blogs.push(blog);
     return this.#id++;
   }
+
+  getBlogs() {
+    return [...this.#blogs];
+  }
 }
 
 module.exports = Blogs;

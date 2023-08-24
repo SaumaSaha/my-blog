@@ -7,4 +7,10 @@ const handlePostBlog = (req, res) => {
   res.status(201).json({ blogId });
 };
 
-module.exports = { handlePostBlog };
+const handleGetBlogs = (req, res) => {
+  const { blogs } = req.app;
+
+  res.status(200).json(blogs.getBlogs());
+};
+
+module.exports = { handlePostBlog, handleGetBlogs };

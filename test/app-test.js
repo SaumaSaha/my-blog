@@ -20,7 +20,7 @@ describe("/", () => {
 
 describe("/blogs", () => {
   describe("POST /blogs", () => {
-    it("should give blogs", (_, done) => {
+    it("should add the blog and give the id back", (_, done) => {
       const blogs = new Blogs();
       const app = createApp(blogs);
 
@@ -29,6 +29,27 @@ describe("/blogs", () => {
         .send({ content: "First Blog" })
         .expect(201)
         .expect("content-type", /application\/json/)
+        .expect({ blogId: 0 })
+        .end(done);
+    });
+  });
+
+  describe("GET /blogs", () => {
+    it("should give the blogs", (_, done) => {
+      const blogs = new Blogs([
+        { blogId: 0, content: "First BLog" },
+        { blogId: 1, content: "Second BLog" },
+      ]);
+      const app = createApp(blogs);
+
+      request(app)
+        .get("/blogs")
+        .expect(200)
+        .expect("content-type", /application\/json/)
+        .expect([
+          { blogId: 0, content: "First BLog" },
+          { blogId: 1, content: "Second BLog" },
+        ])
         .end(done);
     });
   });
